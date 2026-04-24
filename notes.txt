@@ -1,0 +1,22 @@
+1. For each problem, describe your approach along with any issues you
+encountered and if/how you managed to solve those issues.
+
+Problem 1 (Particle Representation):
+For the Blob data type, I stored each pixel as a (x, y) tuple in a list, maintaining running sums of x and y coordinates. The mass() method returns the length of the pixel list. The center of mass is computed as (sum_x/mass, sum_y/mass). The distanceTo() method computes Euclidean distance between two blobs' centers of mass. No major issues.
+
+Problem 2 (Particle Identification):
+For the BlobFinder, I implemented a depth-first search (recursive) to identify connected components of foreground pixels (those with luminance >= tau). I used a 2D boolean visited matrix to avoid revisiting pixels. The DFS marks pixels as visited and adds them to a Blob. The getBeads() method filters blobs by minimum mass. One potential issue is stack overflow for very large blobs, but for this assignment the data is manageable.
+
+Problem 3 (Particle Tracking):
+The bead_tracker.py processes consecutive frames in pairs. For each bead in the current frame, it finds the closest bead in the previous frame using distanceTo(). If the distance is within the delta threshold, the radial displacement (Euclidean distance) is output. No issues.
+
+Problem 4 (Estimating Avogadro's Constant):
+The avogadro.py reads all radial displacements from stdin (in pixels), converts them to meters using 0.175e-6 m/pixel, then computes sigma^2 = sum(r^2)/(2n). Using Einstein-Smoluchowski (D = sigma^2 when dt=0.5) and Stokes-Einstein (k = 6*pi*D*eta*rho/T), I estimate k, then compute NA = R/k. Tested against provided displacements-run_1.txt and got 6.633037e+23, matching the expected reference value.
+
+2. List any acknowledgements here.
+
+Adapted from the Atomic Nature of Matter assignment developed at Princeton University by David Botstein, Tamara Broderick, Ed Davisson, Daniel Marlow, William Ryu, and Kevin Wayne. Course: CS110 - Introduction to Computing, Swami Iyer, UMass Boston, Spring 2026.
+
+3. List any other comments here.
+
+None.
